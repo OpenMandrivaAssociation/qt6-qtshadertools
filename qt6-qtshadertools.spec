@@ -1,4 +1,4 @@
-%define beta beta5
+%define beta rc2
 #define snapshot 20200627
 %define major 6
 
@@ -54,24 +54,7 @@ Qt %{major} shader tools
 # /usr/lib over /usr/lib64 even on 64-bit boxes?
 %cmake -G Ninja \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
-	-DBUILD_EXAMPLES:BOOL=ON \
-	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DFEATURE_cxx2a:BOOL=ON \
-	-DFEATURE_dynamicgl:BOOL=ON \
-	-DFEATURE_ftp:BOOL=ON \
-	-DFEATURE_opengl_dynamic:BOOL=ON \
-	-DFEATURE_use_lld_linker:BOOL=ON \
-	-DFEATURE_xcb_native_painting:BOOL=ON \
-	-DFEATURE_openssl:BOOL=ON \
-	-DFEATURE_openssl_linked:BOOL=ON \
-	-DFEATURE_system_sqlite:BOOL=ON \
-	-DINPUT_sqlite=system \
-	-DQT_WILL_INSTALL:BOOL=ON \
-	-D_OPENGL_LIB_PATH=%{_libdir} \
-	-DOPENGL_egl_LIBRARY=%{_libdir}/libEGL.so \
-	-DOPENGL_glu_LIBRARY=%{_libdir}/libGLU.so \
-	-DOPENGL_glx_LIBRARY=%{_libdir}/libGLX.so \
-	-DOPENGL_opengl_LIBRARY=%{_libdir}/libOpenGL.so
+	-DQT_BUILD_EXAMPLES:BOOL=ON
 
 %build
 export LD_LIBRARY_PATH="$(pwd)/build/lib:${LD_LIBRARY_PATH}"
@@ -106,11 +89,6 @@ done
 %{_qtdir}/lib/libQt6ShaderTools.prl
 %{_qtdir}/lib/libQt6ShaderTools.so
 %{_qtdir}/lib/libQt6ShaderTools.so.*
-%{_qtdir}/mkspecs/modules/qt_ext_glslang_glslang.pri
-%{_qtdir}/mkspecs/modules/qt_ext_glslang_oglcompiler.pri
-%{_qtdir}/mkspecs/modules/qt_ext_glslang_osdependent.pri
-%{_qtdir}/mkspecs/modules/qt_ext_glslang_spirv.pri
-%{_qtdir}/mkspecs/modules/qt_ext_spirv_cross.pri
 %{_qtdir}/mkspecs/modules/qt_lib_shadertools.pri
 %{_qtdir}/mkspecs/modules/qt_lib_shadertools_private.pri
 %{_qtdir}/modules/ShaderTools.json
