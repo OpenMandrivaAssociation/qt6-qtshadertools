@@ -6,7 +6,7 @@
 
 Name:		qt6-qtshadertools
 Version:	6.1.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
 Source:		qtshadertools-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -67,25 +67,19 @@ rm -f %{buildroot}%{_libdir}/qt6/%{_lib}/libpnp_basictools.a
 # Put stuff where tools will find it
 # We can't do the same for %{_includedir} right now because that would
 # clash with qt5 (both would want to have /usr/include/QtCore and friends)
-mkdir -p %{buildroot}%{_bindir} %{buildroot}%{_libdir}/cmake
+mv %{buildroot}%{_qtdir}/lib/cmake %{buildroot}%{_libdir}/
 for i in %{buildroot}%{_qtdir}/lib/*.so*; do
 	ln -s qt%{major}/lib/$(basename ${i}) %{buildroot}%{_libdir}/
 done
-for i in %{buildroot}%{_qtdir}/lib/cmake/*; do
-	[ "$(basename ${i})" = "Qt6BuildInternals" ] && continue
-	ln -s ../qt%{major}/lib/cmake/$(basename ${i}) %{buildroot}%{_libdir}/cmake/
-done
 
 %files
+%{_libdir}/cmake/Qt6BuildInternals/StandaloneTests/*
 %{_libdir}/cmake/Qt6ShaderTools
 %{_libdir}/cmake/Qt6ShaderToolsTools
 %{_libdir}/libQt6ShaderTools.so
 %{_libdir}/libQt6ShaderTools.so.*
 %{_qtdir}/bin/qsb
 %{_qtdir}/include/QtShaderTools
-%{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/QtShaderToolsTestsConfig.cmake
-%{_qtdir}/lib/cmake/Qt6ShaderTools
-%{_qtdir}/lib/cmake/Qt6ShaderToolsTools
 %{_qtdir}/lib/libQt6ShaderTools.prl
 %{_qtdir}/lib/libQt6ShaderTools.so
 %{_qtdir}/lib/libQt6ShaderTools.so.*
