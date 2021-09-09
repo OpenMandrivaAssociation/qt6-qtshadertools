@@ -1,12 +1,12 @@
-#define beta rc
+%define beta beta4
 #define snapshot 20200627
 %define major 6
 
 %define _qtdir %{_libdir}/qt%{major}
 
 Name:		qt6-qtshadertools
-Version:	6.1.0
-Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}2
+Version:	6.2.0
+Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
 Source:		qtshadertools-%{?snapshot:%{snapshot}}%{!?snapshot:%{version}}.tar.zst
@@ -20,21 +20,21 @@ BuildRequires:	ninja
 BuildRequires:	%{_lib}Qt%{major}Core-devel
 BuildRequires:	%{_lib}Qt%{major}Gui-devel
 BuildRequires:	%{_lib}Qt%{major}Network-devel
-BuildRequires:	%{_lib}Qt%{major}Qml-devel
-BuildRequires:	%{_lib}Qt%{major}QmlDevTools-devel
-BuildRequires:	%{_lib}Qt%{major}QmlModels-devel
-BuildRequires:	%{_lib}Qt%{major}QmlQuick-devel
-BuildRequires:	%{_lib}Qt%{major}QmlQuickWidgets-devel
+#BuildRequires:	%{_lib}Qt%{major}Qml-devel
+#BuildRequires:	%{_lib}Qt%{major}QmlDevTools-devel
+#BuildRequires:	%{_lib}Qt%{major}QmlModels-devel
+#BuildRequires:	%{_lib}Qt%{major}QmlQuick-devel
+#BuildRequires:	%{_lib}Qt%{major}QmlQuickWidgets-devel
 BuildRequires:	%{_lib}Qt%{major}Xml-devel
 BuildRequires:	%{_lib}Qt%{major}Widgets-devel
-BuildRequires:	%{_lib}Qt%{major}QmlDevTools-devel
+#BuildRequires:	%{_lib}Qt%{major}QmlDevTools-devel
 BuildRequires:	%{_lib}Qt%{major}Sql-devel
 BuildRequires:	%{_lib}Qt%{major}PrintSupport-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGL-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGLWidgets-devel
 BuildRequires:	%{_lib}Qt%{major}DBus-devel
 BuildRequires:	qt%{major}-cmake
-BuildRequires:	qt%{major}-qtdeclarative
+#BuildRequires:	qt%{major}-qtdeclarative
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(vulkan)
@@ -86,3 +86,4 @@ done
 %{_qtdir}/mkspecs/modules/qt_lib_shadertools.pri
 %{_qtdir}/mkspecs/modules/qt_lib_shadertools_private.pri
 %{_qtdir}/modules/ShaderTools.json
+%{_qtdir}/lib/metatypes/qt6shadertools_relwithdebinfo_metatypes.json
