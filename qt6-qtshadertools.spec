@@ -1,4 +1,4 @@
-%define beta beta3
+%define beta rc
 #define snapshot 20200627
 %define major 6
 
@@ -20,21 +20,14 @@ BuildRequires:	ninja
 BuildRequires:	%{_lib}Qt%{major}Core-devel
 BuildRequires:	%{_lib}Qt%{major}Gui-devel
 BuildRequires:	%{_lib}Qt%{major}Network-devel
-#BuildRequires:	%{_lib}Qt%{major}Qml-devel
-#BuildRequires:	%{_lib}Qt%{major}QmlDevTools-devel
-#BuildRequires:	%{_lib}Qt%{major}QmlModels-devel
-#BuildRequires:	%{_lib}Qt%{major}QmlQuick-devel
-#BuildRequires:	%{_lib}Qt%{major}QmlQuickWidgets-devel
 BuildRequires:	%{_lib}Qt%{major}Xml-devel
 BuildRequires:	%{_lib}Qt%{major}Widgets-devel
-#BuildRequires:	%{_lib}Qt%{major}QmlDevTools-devel
 BuildRequires:	%{_lib}Qt%{major}Sql-devel
 BuildRequires:	%{_lib}Qt%{major}PrintSupport-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGL-devel
 BuildRequires:	%{_lib}Qt%{major}OpenGLWidgets-devel
 BuildRequires:	%{_lib}Qt%{major}DBus-devel
 BuildRequires:	qt%{major}-cmake
-#BuildRequires:	qt%{major}-qtdeclarative
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(xkbcommon)
 BuildRequires:	pkgconfig(vulkan)
@@ -47,6 +40,46 @@ License:	LGPLv3/GPLv3/GPLv2
 
 %description
 Qt %{major} shader tools
+
+%define libs ShaderTools
+%{expand:%(for lib in %{libs}; do
+	cat <<EOF
+%%global lib${lib} %%mklibname Qt%{major}${lib} %{major}
+%%global dev${lib} %%mklibname -d Qt%{major}${lib}
+%%package -n %%{lib${lib}}
+Summary: Qt %{major} ${lib} library
+Group: System/Libraries
+
+%%description -n %%{lib${lib}}
+Qt %{major} ${lib} library
+
+%%files -n %%{lib${lib}}
+%{_qtdir}/lib/libQt%{major}${lib}.so.*
+%{_libdir}/libQt%{major}${lib}.so.*
+
+%%package -n %%{dev${lib}}
+Summary: Development files for the Qt %{major} ${lib} library
+Requires: %%{lib${lib}} = %{EVRD}
+Group: Development/KDE and Qt
+
+%%description -n %%{dev${lib}}
+Development files for the Qt %{major} ${lib} library
+
+%%files -n %%{dev${lib}}
+%{_qtdir}/lib/libQt%{major}${lib}.so
+%{_libdir}/libQt%{major}${lib}.so
+%{_qtdir}/lib/libQt%{major}${lib}.prl
+%{_qtdir}/include/Qt${lib}
+%optional %{_qtdir}/modules/${lib}.json
+%optional %{_qtdir}/modules/${lib}Private.json
+%optional %{_libdir}/cmake/Qt%{major}${lib}
+%optional %{_libdir}/cmake/Qt%{major}${lib}Private
+%optional %{_qtdir}/lib/metatypes/qt%{major}$(echo ${lib}|tr A-Z a-z)_relwithdebinfo_metatypes.json
+%optional %{_qtdir}/lib/metatypes/qt%{major}$(echo ${lib}|tr A-Z a-z)private_relwithdebinfo_metatypes.json
+%optional %{_qtdir}/mkspecs/modules/qt_lib_$(echo ${lib}|tr A-Z a-z).pri
+%optional %{_qtdir}/mkspecs/modules/qt_lib_$(echo ${lib}|tr A-Z a-z)_private.pri
+EOF
+done)}
 
 %prep
 %autosetup -p1 -n qtshadertools%{!?snapshot:-everywhere-src-%{version}%{?beta:-%{beta}}}
@@ -75,16 +108,5 @@ done
 
 %files
 %{_libdir}/cmake/Qt6BuildInternals/StandaloneTests/*
-%{_libdir}/cmake/Qt6ShaderTools
 %{_libdir}/cmake/Qt6ShaderToolsTools
-%{_libdir}/libQt6ShaderTools.so
-%{_libdir}/libQt6ShaderTools.so.*
 %{_qtdir}/bin/qsb
-%{_qtdir}/include/QtShaderTools
-%{_qtdir}/lib/libQt6ShaderTools.prl
-%{_qtdir}/lib/libQt6ShaderTools.so
-%{_qtdir}/lib/libQt6ShaderTools.so.*
-%{_qtdir}/mkspecs/modules/qt_lib_shadertools.pri
-%{_qtdir}/mkspecs/modules/qt_lib_shadertools_private.pri
-%{_qtdir}/modules/ShaderTools.json
-%{_qtdir}/lib/metatypes/qt6shadertools_relwithdebinfo_metatypes.json
