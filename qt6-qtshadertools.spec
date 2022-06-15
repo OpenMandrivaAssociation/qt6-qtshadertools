@@ -2,7 +2,7 @@
 #define snapshot 20200627
 
 Name:		qt6-qtshadertools
-Version:	6.3.0
+Version:	6.3.1
 Release:	%{?beta:0.%{beta}.}%{?snapshot:0.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
@@ -39,7 +39,6 @@ License:	LGPLv3/GPLv3/GPLv2
 Qt %{qtmajor} shader tools
 
 %define extra_devel_files_ShaderTools \
-%{_qtdir}/lib/cmake/Qt6BuildInternals/StandaloneTests/* \
 %{_qtdir}/bin/qsb
 
 %qt6libs ShaderTools
