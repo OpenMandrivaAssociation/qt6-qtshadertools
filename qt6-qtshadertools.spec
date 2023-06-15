@@ -1,8 +1,8 @@
-#define beta rc
+%define beta beta1
 #define snapshot 20200627
 
 Name:		qt6-qtshadertools
-Version:	6.5.1
+Version:	6.6.0
 Release:	%{?beta:0.%{beta}.1}%{?snapshot:1.%{snapshot}.}1
 %if 0%{?snapshot:1}
 # "git archive"-d from "dev" branch of git://code.qt.io/qt/qtbase.git
