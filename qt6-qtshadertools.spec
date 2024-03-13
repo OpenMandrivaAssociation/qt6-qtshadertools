@@ -1,4 +1,4 @@
-%define beta beta3
+%define beta rc
 #define snapshot 20200627
 
 Name:		qt6-qtshadertools
