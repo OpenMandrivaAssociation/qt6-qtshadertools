@@ -49,6 +49,7 @@ Qt %{qtmajor} shader tools
 # FIXME why are OpenGL lib paths autodetected incorrectly, preferring
 # /usr/lib over /usr/lib64 even on 64-bit boxes?
 %cmake -G Ninja \
+	-DQT_BUILD_TESTS:BOOL=OFF \
 	-DCMAKE_INSTALL_PREFIX=%{_qtdir} \
 	-DQT_MKSPECS_DIR:FILEPATH=%{_qtdir}/mkspecs \
 	-DQT_BUILD_EXAMPLES:BOOL=ON
